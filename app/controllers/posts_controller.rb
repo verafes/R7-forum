@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :check_logon, except: %w[show]
   before_action :set_forum, only: %w[create new]
   before_action :set_post, only: %w[show edit update destroy]
-  before_action :check_access, only: %w[edit update delete] # access control!! a user can only
+  before_action :check_access, only: %w[edit update destroy] # access control!! a user can only
   def create
     @post = @forum.posts.new(post_params)  # we create a new post for the current forum
       if @post.save
@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   end
 
   def new
+      @post = @forum.posts.new
   end
 
   def edit
@@ -52,13 +53,13 @@ class PostsController < ApplicationController
     end
 
     def check_access
-      if @post.user_id != session[:current_user][:id]
+      if @post.user_id != @current_user.id
         redirect_to forums_path, notice: "That's not your post, so you can't change it."
       end
     end
 
     def post_params   # security check, also known as "strong parameters"
-      params[:post][:user_id] = session[:current_user]["id"]
+      params[:post][:user_id] = @current_user.id
          # here we have to add a parameter so that the post is associated with the current user
       params.require(:post).permit(:title,:content,:user_id)
     end

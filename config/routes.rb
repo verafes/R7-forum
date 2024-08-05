@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  get 'posts/create'
-  get 'posts/new'
-  get 'posts/edit'
-  get 'posts/show'
-  get 'posts/update'
-  get 'posts/destroy'
   root 'forums#index'
+
+#   get 'posts/create'
+#   get 'posts/new'
+#   get 'posts/edit'
+#   get 'posts/show'
+#   get 'posts/update'
+#   get 'posts/destroy'
+#   root 'forums#index'
 #   resources :users
   get '/users', to: 'users#index', as: 'users'
   get '/users/new', to: 'users#new', as: 'new_user'
