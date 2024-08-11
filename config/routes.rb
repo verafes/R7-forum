@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :subscriptions, shallow: true, except: [:index]
     end
     get '/subscriptions', to: 'subscriptions#index', as: 'subscriptions'
+    post '/subscriptions', to: 'subscriptions#create'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

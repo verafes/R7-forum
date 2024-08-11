@@ -1,5 +1,7 @@
 <div id="<%= dom_id post %>">
-  <p><%= "From #{post.user.name}:" %>
+  <p>
+    b<%= debug(post) %>
+    <%= "From #{post.user.name}:" %>
     <%= post.title %>
     <%= link_to "Show this post", post %>
   </p>

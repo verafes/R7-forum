@@ -8,6 +8,7 @@ class ForumsController < ApplicationController
 
   # GET /forums/1 or /forums/1.json
   def show
+    @forum = Forum.find(params[:id])
   end
 
   # GET /forums/new
