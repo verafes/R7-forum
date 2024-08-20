@@ -1,8 +1,13 @@
 class PostsController < ApplicationController
-  before_action :check_logon, except: %w[show]
+  before_action :check_logon, except: %w[show index]
   before_action :set_forum, only: %w[create new]
   before_action :set_post, only: %w[show edit update destroy]
   before_action :check_access, only: %w[edit update destroy] # access control!! a user can only
+  
+  def index
+    @posts = @forum.posts  # to get the list of posts
+  end
+
   def create
     @post = @forum.posts.new(post_params)  # we create a new post for the current forum
       if @post.save

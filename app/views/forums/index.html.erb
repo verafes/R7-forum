@@ -3,12 +3,28 @@
 <h1>Forums</h1>
 
 <div id="forums">
-  <% @forums.each do |forum| %>
-    <%= render forum %>
-    <p>
-      <%= link_to "Show this forum", forum %>
-    </p>
+  <% if @current_user.nil? %>
+    <p>User is not logged in.</p>
+  <% else %>
+    <% @forums.each do |forum| %>
+      <% if forum.present? %>
+        <%= render forum %>
+        <p>
+          <%= link_to "Show this forum", forum %>
+        </p>
+
+        <% subscription = Subscription.find_by(forum_id: forum.id, user_id: @current_user.id) %>
+        <p>Forum id: <%= forum.id %>, current user id: <%= @current_user.id %></p>
+        <% if subscription.present? %>
+          <%= link_to "Show this subscription", subscription_path(subscription) %>
+        <% else %>
+          <%= link_to "Subscribe", new_forum_subscription_path(forum) %>
+        <% end %>
+      <% else %>
+        <p>Error: Forum is nil</p>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
-
+<br>
 <%= link_to "New forum", new_forum_path %>
